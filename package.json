@@ -9,8 +9,8 @@
     "lint": "eslint server/**/*.js client/**/*.js webpack.config.js",
     "build": "webpack",
     "start": "set NODE_ENV=production&&nodemon server/server.js --exec babel-node",
-    "debug": "nodemon --debug server/server.js --exec babel-node",
-    "debug2": "nodemon --inspect server/server.js --exec babel-node",
+    "debug": "nodemon --inspect server/server.js --exec babel-node",
+    "debug2": "nodemon --debug server/server.js --exec babel-node",
     "dev": "webpack-dev-server"
   },
   "dependencies": {
