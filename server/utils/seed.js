@@ -1,6 +1,6 @@
 let posts = [
-    { title: 'my fist post 1', text: 'post content 1' },
-    { title: 'my fist post 2', text: 'post content 1' }
+    { title: 'my first post 1', text: 'post content 1' },
+    { title: 'my first post 2', text: 'post content 2' }
 ]
 
 var createPosts = async(db) => {

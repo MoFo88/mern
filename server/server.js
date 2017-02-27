@@ -3,20 +3,24 @@
 const config = require('./config/config')
 const express = require('express')
 const apiRouter = require('./api/api')
+const path = require('path')
 const MongoClient = require('mongodb').MongoClient
 
 const app = express()
 
-app.use(function (error, req, res, next) {
-  res.status(404)
-  res.render('????' + error.message)
-})
-
 app.use('/api', apiRouter)
-require('./middleware/devMiddleware')(app)
+
+if (process.env.NODE_ENV === config.dev) {
+  require('./middleware/devMiddleware')(app)
+}
+
 app.use(express.static('./public'))
 
-MongoClient.connect(config.db.url, { promiseLibrary: Promise }, (err, db) => {
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
+})
+
+MongoClient.connect(config.database.url, { promiseLibrary: Promise }, (err, db) => {
   if (err) {
     console.log(err.message)
   }
@@ -30,6 +34,11 @@ MongoClient.connect(config.db.url, { promiseLibrary: Promise }, (err, db) => {
   app.listen(config.port, hostname, () => {
     console.log(`Server running at http://${hostname}:${config.port}/`)
   })
+})
+
+app.use(function (error, req, res, next) {
+  console.error(error.message)
+  res.status(500).send('Oops')
 })
 
 // app.all("/", (reg, res) => {
